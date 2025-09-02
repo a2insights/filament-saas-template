@@ -1,0 +1,42 @@
+{
+    "name": "Laravel Codespace",
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
+    "service": "laravel.test",
+    "workspaceFolder": "/var/www/html",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {
+            "version": "latest",
+            "mobsf_dind_version": "latest",
+            "mobsf_dind_name": "docker:dind"
+        }
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",
+                "ikappas.phpcs"
+            ]
+        }
+    },
+    "portsAttributes": {
+        "80": {
+            "label": "Laravel Application",
+            "onAutoForward": "notify"
+        },
+        "3306": {
+            "label": "MySQL",
+            "onAutoForward": "ignore"
+        },
+        "8025": {
+            "label": "MailHog UI",
+            "onAutoForward": "notify"
+        },
+        "8081": {
+            "label": "phpMyAdmin",
+            "onAutoForward": "notify"
+        }
+    },
+    "postCreateCommand": "composer install && php artisan fillament-saas:install && php artisan key:generate && php artisan storage:link"
+}
