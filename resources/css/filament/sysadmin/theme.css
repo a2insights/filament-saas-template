@@ -4,3 +4,5 @@
 @source '../../../../vendor/a2insights/filament-saas/resources/**/*.blade.php';
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+@source '../../../../vendor/andrewdwallo/filament-companies/resources/views';
+
