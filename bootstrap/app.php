@@ -17,7 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \A2Insights\FilamentSaas\Settings\Http\Middleware\Locale::class,
         ]);
 
-        $middleware->append(\Hasnayeen\Themes\Http\Middleware\SetTheme::class);
+        // TODO: needs to reinstall hasnayeen/themes
+        // $middleware->append(\Hasnayeen\Themes\Http\Middleware\SetTheme::class);
         // $middleware->append(\SolutionForest\FilamentFirewall\Middleware\WhitelistRangeMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {

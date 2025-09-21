@@ -3,10 +3,16 @@
 namespace App\Providers\Filament;
 
 use A2Insights\FilamentSaas\Features\Features;
+use A2Insights\FilamentSaas\Features\FeaturesPlugin;
+use A2Insights\FilamentSaas\Settings\Http\Middleware\Locale;
+use A2Insights\FilamentSaas\Settings\SettingsPlugin;
 use A2Insights\FilamentSaas\Tenant\Http\Middleware\TenancyInitialize;
+use A2Insights\FilamentSaas\Tenant\TenantPlugin;
 use A2Insights\FilamentSaas\User\Filament\Components\Phone;
 use A2Insights\FilamentSaas\User\Filament\Components\Username;
 use A2Insights\FilamentSaas\User\Filament\Pages\TentantUserProfilePage;
+use A2Insights\FilamentSaas\User\Filament\UserResource;
+use A2Insights\FilamentSaas\User\UserPlugin;
 use App\Actions\FilamentCompanies\AddCompanyEmployee;
 use App\Actions\FilamentCompanies\CreateConnectedAccount;
 use App\Actions\FilamentCompanies\CreateNewUser;
@@ -23,15 +29,15 @@ use App\Actions\FilamentCompanies\UpdateConnectedAccount;
 use App\Actions\FilamentCompanies\UpdateUserPassword;
 use App\Actions\FilamentCompanies\UpdateUserProfileInformation;
 use App\Models\Company;
+use Awcodes\QuickCreate\QuickCreatePlugin;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
-use Filament\Pages\Auth\Register;
+use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Platform;
-use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -40,6 +46,8 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\App;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Jeffgreco13\FilamentBreezy\BreezyCore;
+use Marjose123\FilamentWebhookServer\WebhookPlugin;
 use Wallo\FilamentCompanies\Actions\GenerateRedirectForProvider;
 use Wallo\FilamentCompanies\Enums\Feature;
 use Wallo\FilamentCompanies\Enums\Provider;
@@ -58,7 +66,7 @@ class TenantPanelServiceProvider extends PanelProvider
             ->path('admin')
             ->default()
             ->login(Login::class)
-            ->registration($this->getRegistrationPage())
+            // ->registration($this->getRegistrationPage())
             ->passwordReset()
             ->emailVerification()
             ->profile()
@@ -74,18 +82,21 @@ class TenantPanelServiceProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->unsavedChangesAlerts()
+            ->viteTheme('resources/css/filament/sysadmin/theme.css')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->plugins([
-                \Awcodes\FilamentQuickCreate\QuickCreatePlugin::make()
+                QuickCreatePlugin::make()
                     ->includes([
-                        \A2Insights\FilamentSaas\User\Filament\UserResource::class,
+                        UserResource::class,
                     ]),
-                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
-                \Jeffgreco13\FilamentBreezy\BreezyCore::make()->myProfile(
+                FilamentShieldPlugin::make()
+                    ->registerNavigation(false)
+                    ->scopeToTenant(false),
+                BreezyCore::make()->myProfile(
                     shouldRegisterUserMenu: true, // Sets the 'account' link in the panel User Menu (default = true)
                     shouldRegisterNavigation: false, // Adds a main navigation item for the My Profile page (default = false)
                     hasAvatars: true, // Enables the avatar upload form component (default = false)
@@ -104,7 +115,7 @@ class TenantPanelServiceProvider extends PanelProvider
                         ->visibility('private')
                         ->directory('avatars')
                         ->disk('avatars')),
-                \Hasnayeen\Themes\ThemesPlugin::make()->canViewThemesPage(fn () => (bool) auth()?->user()?->hasRole('super_admin')),
+                WebhookPlugin::make(),
                 FilamentCompanies::make()
                     ->userPanel('company')
                     ->switchCurrentCompany()
@@ -132,10 +143,10 @@ class TenantPanelServiceProvider extends PanelProvider
                             Feature::CreateAccountOnFirstLogin,
                         ],
                     ),
-                \A2Insights\FilamentSaas\User\UserPlugin::make(),
-                \A2Insights\FilamentSaas\Features\FeaturesPlugin::make(),
-                \A2Insights\FilamentSaas\Settings\SettingsPlugin::make(),
-                \A2Insights\FilamentSaas\Tenant\TenantPlugin::make(),
+                UserPlugin::make(),
+                FeaturesPlugin::make(),
+                SettingsPlugin::make(),
+                TenantPlugin::make(),
             ])
             ->widgets([
                 // Widgets\AccountWidget::class,
@@ -151,14 +162,12 @@ class TenantPanelServiceProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-                \A2Insights\FilamentSaas\Settings\Http\Middleware\Locale::class,
+                Locale::class,
             ])
             ->authMiddleware([
                 Authenticate::class,
-                \Cog\Laravel\Ban\Http\Middleware\ForbidBannedUser::class,
             ])
             ->tenantMiddleware([
-                \Hasnayeen\Themes\Http\Middleware\SetTheme::class,
             ])
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
@@ -218,14 +227,14 @@ class TenantPanelServiceProvider extends PanelProvider
     }
 
     // TODO: Not use cached features.
-    private function getRegistrationPage(): ?string
-    {
-        try {
-            $features = cache('filament-saas.features') ?? App::make(Features::class);
+    // private function getRegistrationPage(): ?string
+    // {
+    //     try {
+    //         $features = cache('filament-saas.features') ?? App::make(Features::class);
 
-            return $features->auth_registration ? Register::class : null;
-        } catch (\Throwable $th) {
-            return null;
-        }
-    }
+    //         return $features->auth_registration ? Register::class : null;
+    //     } catch (\Throwable $th) {
+    //         return null;
+    //     }
+    // }
 }

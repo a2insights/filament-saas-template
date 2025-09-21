@@ -9,19 +9,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Wallo\FilamentCompanies\FilamentCompanies;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ */
 class UserFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = User::class;
-
-    /**
      * The current password being used by the factory.
      */
-    protected static ?string $password = null;
+    protected static ?string $password;
 
     /**
      * Define the model's default state.
