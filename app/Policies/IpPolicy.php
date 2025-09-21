@@ -1,108 +1,69 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Policies;
 
-use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use SolutionForest\FilamentFirewall\Models\Ip;
 
 class IpPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
+    public function viewAny(AuthUser $authUser): bool
     {
-        return $user->can('view_any_firewall::ip');
+        return $authUser->can('ViewAny:Ip');
     }
 
-    /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Ip $ip): bool
+    public function view(AuthUser $authUser, Ip $ip): bool
     {
-        return $user->can('view_firewall::ip');
+        return $authUser->can('View:Ip');
     }
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
+    public function create(AuthUser $authUser): bool
     {
-        return $user->can('create_firewall::ip');
+        return $authUser->can('Create:Ip');
     }
 
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Ip $ip): bool
+    public function update(AuthUser $authUser, Ip $ip): bool
     {
-        return $user->can('update_firewall::ip');
+        return $authUser->can('Update:Ip');
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Ip $ip): bool
+    public function delete(AuthUser $authUser, Ip $ip): bool
     {
-        return $user->can('delete_firewall::ip');
+        return $authUser->can('Delete:Ip');
     }
 
-    /**
-     * Determine whether the user can bulk delete.
-     */
-    public function deleteAny(User $user): bool
+    public function restore(AuthUser $authUser, Ip $ip): bool
     {
-        return $user->can('delete_any_firewall::ip');
+        return $authUser->can('Restore:Ip');
     }
 
-    /**
-     * Determine whether the user can permanently delete.
-     */
-    public function forceDelete(User $user, Ip $ip): bool
+    public function forceDelete(AuthUser $authUser, Ip $ip): bool
     {
-        return $user->can('force_delete_firewall::ip');
+        return $authUser->can('ForceDelete:Ip');
     }
 
-    /**
-     * Determine whether the user can permanently bulk delete.
-     */
-    public function forceDeleteAny(User $user): bool
+    public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return $user->can('force_delete_any_firewall::ip');
+        return $authUser->can('ForceDeleteAny:Ip');
     }
 
-    /**
-     * Determine whether the user can restore.
-     */
-    public function restore(User $user, Ip $ip): bool
+    public function restoreAny(AuthUser $authUser): bool
     {
-        return $user->can('restore_firewall::ip');
+        return $authUser->can('RestoreAny:Ip');
     }
 
-    /**
-     * Determine whether the user can bulk restore.
-     */
-    public function restoreAny(User $user): bool
+    public function replicate(AuthUser $authUser, Ip $ip): bool
     {
-        return $user->can('restore_any_firewall::ip');
+        return $authUser->can('Replicate:Ip');
     }
 
-    /**
-     * Determine whether the user can replicate.
-     */
-    public function replicate(User $user, Ip $ip): bool
+    public function reorder(AuthUser $authUser): bool
     {
-        return $user->can('replicate_firewall::ip');
-    }
-
-    /**
-     * Determine whether the user can reorder.
-     */
-    public function reorder(User $user): bool
-    {
-        return $user->can('reorder_firewall::ip');
+        return $authUser->can('Reorder:Ip');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Policies;
 use A2Insights\FilamentSaas\Features\Features;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Auth\Access\Response;
 
 class WebhookPolicy
 {
@@ -13,7 +14,7 @@ class WebhookPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return Response|bool
      */
     public function viewAny(User $user, Features $feature)
     {
@@ -23,7 +24,7 @@ class WebhookPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return Response|bool
      */
     public function view(User $user)
     {
@@ -33,7 +34,7 @@ class WebhookPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @return \Illuminate\Auth\Access\Response|bool
+     * @return Response|bool
      */
     public function create(User $user)
     {

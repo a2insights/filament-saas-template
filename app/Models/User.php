@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use A2Insights\FilamentSaas\User\Settings;
-use Cog\Contracts\Ban\Bannable as BannableContract;
-use Cog\Laravel\Ban\Traits\Bannable;
+// TODO:PR for upgrade
+// use Cog\Contracts\Ban\Bannable as BannableContract;
+// use Cog\Laravel\Ban\Traits\Bannable;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasDefaultTenant;
@@ -29,9 +30,9 @@ use Wallo\FilamentCompanies\HasConnectedAccounts;
 use Wallo\FilamentCompanies\HasProfilePhoto;
 use Wallo\FilamentCompanies\SetsProfilePhotoFromUrl;
 
-class User extends Authenticatable implements BannableContract, FilamentUser, HasAvatar, HasDefaultTenant, HasTenants, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser, HasAvatar, HasDefaultTenant, HasTenants, MustVerifyEmail
 {
-    use Bannable, FindSimilarUsernames, HasApiTokens,
+    use FindSimilarUsernames, HasApiTokens,
         HasCompanies, HasConnectedAccounts, HasFactory, HasProfilePhoto, HasRoles, Notifiable,
         SetsProfilePhotoFromUrl, SoftDeletes, TwoFactorAuthenticatable;
 
