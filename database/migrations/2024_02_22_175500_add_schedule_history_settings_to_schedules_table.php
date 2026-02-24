@@ -28,7 +28,7 @@ class AddScheduleHistorySettingsToSchedulesTable extends Migration
     public function down()
     {
         Schema::table(Config::get('filament-database-schedule.table.schedules', 'schedules'), function (Blueprint $table) {
-            $table->dropColumn(['limit_history_count','max_history_count']);
+            $table->dropColumn(['limit_history_count', 'max_history_count']);
         });
     }
 }

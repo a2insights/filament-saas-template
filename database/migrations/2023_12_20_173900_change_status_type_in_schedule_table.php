@@ -3,9 +3,9 @@
 use HusamTariq\FilamentDatabaseSchedule\Enums\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class ChangeStatusTypeInScheduleTable extends Migration
 {
