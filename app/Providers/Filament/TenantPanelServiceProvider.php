@@ -10,7 +10,6 @@ use A2Insights\FilamentSaas\Tenant\Http\Middleware\TenancyInitialize;
 use A2Insights\FilamentSaas\Tenant\TenantPlugin;
 use A2Insights\FilamentSaas\User\Filament\Components\Phone;
 use A2Insights\FilamentSaas\User\Filament\Components\Username;
-use A2Insights\FilamentSaas\User\Filament\Pages\TentantUserProfilePage;
 use A2Insights\FilamentSaas\User\Filament\UserResource;
 use A2Insights\FilamentSaas\User\UserPlugin;
 use App\Actions\FilamentCompanies\AddCompanyEmployee;
@@ -109,7 +108,6 @@ class TenantPanelServiceProvider extends PanelProvider
                     // ->enableSanctumTokens(
                     //     permissions: ['create', 'update', 'view', 'delete'] // optional, customize the permissions (default = ["create", "view", "update", "delete"])
                     // )
-                    ->customMyProfilePage(TentantUserProfilePage::class)
                     ->myProfileComponents([Phone::class, Username::class])
                     ->avatarUploadComponent(fn ($fileUpload) => $fileUpload
                         ->visibility('private')

@@ -10,13 +10,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Wallo\FilamentCompanies\Events\CompanyCreated;
 use Wallo\FilamentCompanies\Events\CompanyDeleted;
 use Wallo\FilamentCompanies\Events\CompanyUpdated;
 use Wallo\FilamentCompanies\FilamentCompanies;
 
-class Company extends BaseTenant implements HasAvatar, HasMedia
+class Company extends \Illuminate\Database\Eloquent\Model implements HasAvatar, HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;

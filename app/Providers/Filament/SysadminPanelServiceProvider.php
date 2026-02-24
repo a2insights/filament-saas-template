@@ -19,7 +19,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Platform;
-use HusamTariq\FilamentDatabaseSchedule\FilamentDatabaseSchedulePlugin;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -85,7 +84,6 @@ class SysadminPanelServiceProvider extends PanelProvider
                         ->directory('avatars')
                         ->disk('avatars')),
                 WebhookPlugin::make(),
-                FilamentDatabaseSchedulePlugin::make(),
                 FilamentFirewallPlugin::make(),
                 EnvironmentIndicatorPlugin::make(),
                 UserPlugin::make(),
