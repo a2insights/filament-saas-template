@@ -4,18 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2a1690f22440e32dd4be7864178e282",
+    "content-hash": "4177fa7a415dbcea114ca940e4a2410a",
     "packages": [
         {
             "name": "a2insights/filament-saas",
             "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/a2insights/filament-saas.git",
+                "reference": "ac391ab26913e6ef07f3ea3a900879b9652c2a99"
+            },
             "dist": {
-                "type": "path",
-                "url": "../filament-saas",
-                "reference": "f0d9b59186a8477e732d8ecc641795a819386481"
+                "type": "zip",
+                "url": "https://api.github.com/repos/a2insights/filament-saas/zipball/ac391ab26913e6ef07f3ea3a900879b9652c2a99",
+                "reference": "ac391ab26913e6ef07f3ea3a900879b9652c2a99",
+                "shasum": ""
             },
             "require": {
-                "amidesfahani/filament-tinyeditor": "^4.0",
+                "amidesfahani/filament-tinyeditor": "^5.0",
                 "andrewdwallo/filament-companies": "dev-l13-compatibility",
                 "artesaos/seotools": "^1.3",
                 "awcodes/filament-quick-create": "^5.0",
@@ -44,7 +50,7 @@
                 "league/flysystem-aws-s3-v3": "^3.29",
                 "livewire/livewire": "^4.1",
                 "lorisleiva/laravel-actions": "^2.9",
-                "malzariey/filament-daterangepicker-filter": "^4.0",
+                "malzariey/filament-daterangepicker-filter": "^5.0",
                 "marjose123/filament-webhook-server": "^3.0",
                 "opcodesio/log-viewer": "^3.19",
                 "php": "^8.2",
@@ -62,25 +68,31 @@
                 "spykapps/theme-inverness": "^1.0",
                 "symfony/intl": "^7.2",
                 "taylornetwork/laravel-username-generator": "^2.8",
-                "ysfkaya/filament-phone-input": "4.1.2"
+                "ysfkaya/filament-phone-input": "4.2.0"
             },
             "require-dev": {
+                "brianium/paratest": "^7.3",
                 "laravel/pint": "^1.24",
                 "nunomaduro/collision": "^8.2.2",
                 "orchestra/testbench": "^11.0",
                 "pestphp/pest": "^4.0",
                 "pestphp/pest-plugin-arch": "^4.0",
-                "pestphp/pest-plugin-laravel": "^4.0"
+                "pestphp/pest-plugin-laravel": "^4.0",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "spatie/ray": "^1.28"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
-                    "providers": [
-                        "A2Insights\\FilamentSaas\\FilamentSaasServiceProvider"
-                    ],
                     "aliases": {
                         "FilamentSaas": "A2Insights\\FilamentSaas\\Facades\\FilamentSaas"
-                    }
+                    },
+                    "providers": [
+                        "A2Insights\\FilamentSaas\\FilamentSaasServiceProvider"
+                    ]
                 }
             },
             "autoload": {
@@ -91,34 +103,7 @@
                     "A2Insights\\FilamentSaas\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "A2Insights\\FilamentSaas\\Tests\\": "tests/"
-                }
-            },
-            "scripts": {
-                "cs": [
-                    "rector",
-                    "pint",
-                    "npm run prettier"
-                ],
-                "pint": [
-                    "pint --config pint-strict-imports.json"
-                ],
-                "rector": [
-                    "rector"
-                ],
-                "test:pest": [
-                    "pest --parallel"
-                ],
-                "test:phpstan": [
-                    "phpstan analyse"
-                ],
-                "test": [
-                    "@test:pest",
-                    "@test:phpstan"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -141,29 +126,27 @@
                 "issues": "https://github.com/a2insights/filament-saas/issues",
                 "source": "https://github.com/a2insights/filament-saas"
             },
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2026-05-22T03:16:16+00:00"
         },
         {
             "name": "amidesfahani/filament-tinyeditor",
-            "version": "v4.0.6",
+            "version": "v5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/amidesfahani/filament-tinyeditor.git",
-                "reference": "9b86b633860a6a75f16f5adb93112f16824a2020"
+                "reference": "4ea24b3e928aecd7dfa39f005b72f43671f0e1c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/amidesfahani/filament-tinyeditor/zipball/9b86b633860a6a75f16f5adb93112f16824a2020",
-                "reference": "9b86b633860a6a75f16f5adb93112f16824a2020",
+                "url": "https://api.github.com/repos/amidesfahani/filament-tinyeditor/zipball/4ea24b3e928aecd7dfa39f005b72f43671f0e1c7",
+                "reference": "4ea24b3e928aecd7dfa39f005b72f43671f0e1c7",
                 "shasum": ""
             },
             "require": {
-                "filament/filament": "^4.0|^5.0",
-                "php": "^8.1",
+                "filament/filament": "^5.0",
+                "php": "^8.2",
                 "spatie/laravel-package-tools": "^1.92.7",
-                "tinymce/tinymce": "^8.0.2"
+                "tinymce/tinymce": "^8.0"
             },
             "require-dev": {
                 "laravel/pint": "^1.24"
@@ -200,9 +183,9 @@
             ],
             "support": {
                 "issues": "https://github.com/amidesfahani/filament-tinyeditor/issues",
-                "source": "https://github.com/amidesfahani/filament-tinyeditor/tree/v4.0.6"
+                "source": "https://github.com/amidesfahani/filament-tinyeditor/tree/v5.0.0"
             },
-            "time": "2026-02-12T07:38:48+00:00"
+            "time": "2026-05-22T00:48:35+00:00"
         },
         {
             "name": "andrewdwallo/filament-companies",
@@ -1206,23 +1189,22 @@
         },
         {
             "name": "brick/math",
-            "version": "0.14.8",
+            "version": "0.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/brick/math.git",
-                "reference": "63422359a44b7f06cae63c3b429b59e8efcc0629"
+                "reference": "a62af7ab2e3cee9f9bf4cf77a5d1e6ba408a44ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/brick/math/zipball/63422359a44b7f06cae63c3b429b59e8efcc0629",
-                "reference": "63422359a44b7f06cae63c3b429b59e8efcc0629",
+                "url": "https://api.github.com/repos/brick/math/zipball/a62af7ab2e3cee9f9bf4cf77a5d1e6ba408a44ee",
+                "reference": "a62af7ab2e3cee9f9bf4cf77a5d1e6ba408a44ee",
                 "shasum": ""
             },
             "require": {
                 "php": "^8.2"
             },
             "require-dev": {
-                "php-coveralls/php-coveralls": "^2.2",
                 "phpstan/phpstan": "2.1.22",
                 "phpunit/phpunit": "^11.5"
             },
@@ -1254,7 +1236,7 @@
             ],
             "support": {
                 "issues": "https://github.com/brick/math/issues",
-                "source": "https://github.com/brick/math/tree/0.14.8"
+                "source": "https://github.com/brick/math/tree/0.17.0"
             },
             "funding": [
                 {
@@ -1262,7 +1244,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-02-10T14:33:43+00:00"
+            "time": "2026-03-17T12:54:54+00:00"
         },
         {
             "name": "carbonphp/carbon-doctrine-types",
@@ -4122,58 +4104,6 @@
             "time": "2026-04-10T14:36:44+00:00"
         },
         {
-            "name": "jaybizzle/crawler-detect",
-            "version": "v1.3.11",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "484792759de89fe94ea6a192065ea7cd99f1eaa2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/484792759de89fe94ea6a192065ea7cd99f1eaa2",
-                "reference": "484792759de89fe94ea6a192065ea7cd99f1eaa2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.5|^6.5|^7.5|^8.5.52|^9.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Jaybizzle\\CrawlerDetect\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Beech",
-                    "email": "m@rkbee.ch",
-                    "role": "Developer"
-                }
-            ],
-            "description": "CrawlerDetect is a PHP class for detecting bots/crawlers/spiders via the user agent",
-            "homepage": "https://github.com/JayBizzle/Crawler-Detect/",
-            "keywords": [
-                "crawler",
-                "crawler detect",
-                "crawler detector",
-                "crawlerdetect",
-                "php crawler detect"
-            ],
-            "support": {
-                "issues": "https://github.com/JayBizzle/Crawler-Detect/issues",
-                "source": "https://github.com/JayBizzle/Crawler-Detect/tree/v1.3.11"
-            },
-            "time": "2026-05-10T14:08:06+00:00"
-        },
-        {
             "name": "jeffgreco13/filament-breezy",
             "version": "v3.2.5",
             "source": {
@@ -4253,88 +4183,6 @@
                 "source": "https://github.com/Jacobtims/filament-breezy/tree/v3.2.5"
             },
             "time": "2026-04-07T14:54:56+00:00"
-        },
-        {
-            "name": "jenssegers/agent",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jocelinkisenga/agent.git",
-                "reference": "6f868c9c7a046b0979f5f5646c057930071c7702"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jocelinkisenga/agent/zipball/6f868c9c7a046b0979f5f5646c057930071c7702",
-                "reference": "6f868c9c7a046b0979f5f5646c057930071c7702",
-                "shasum": ""
-            },
-            "require": {
-                "jaybizzle/crawler-detect": "^1.2",
-                "mobiledetect/mobiledetectlib": "^4.8",
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^5.0|^6.0|^7.0"
-            },
-            "suggest": {
-                "illuminate/support": "Required for laravel service providers"
-            },
-            "default-branch": true,
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Jenssegers\\Agent\\AgentServiceProvider"
-                    ],
-                    "aliases": {
-                        "Agent": "Jenssegers\\Agent\\Facades\\Agent"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Jenssegers\\Agent\\": "src/"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jens Segers",
-                    "homepage": "https://jenssegers.com"
-                }
-            ],
-            "description": "Desktop/mobile user agent parser with support for Laravel, based on Mobiledetect",
-            "homepage": "https://github.com/jenssegers/agent",
-            "keywords": [
-                "agent",
-                "browser",
-                "desktop",
-                "laravel",
-                "mobile",
-                "platform",
-                "user agent",
-                "useragent"
-            ],
-            "support": {
-                "source": "https://github.com/jocelinkisenga/agent/tree/master"
-            },
-            "funding": [
-                {
-                    "type": "github",
-                    "url": "https://github.com/jenssegers"
-                },
-                {
-                    "type": "tidelift",
-                    "url": "https://tidelift.com/funding/github/packagist/jenssegers/agent"
-                }
-            ],
-            "time": "2023-12-30T13:40:53+00:00"
         },
         {
             "name": "jfcherng/php-color-output",
@@ -6503,22 +6351,27 @@
         },
         {
             "name": "malzariey/filament-daterangepicker-filter",
-            "version": "4.0.9",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/malzariey/filament-daterangepicker-filter.git",
-                "reference": "2d75b5a5b0e98cfb38861b7a5ce8ebbfc178c522"
+                "reference": "6d2b2c427ad7050bd58065d45d977faeca41c692"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/malzariey/filament-daterangepicker-filter/zipball/2d75b5a5b0e98cfb38861b7a5ce8ebbfc178c522",
-                "reference": "2d75b5a5b0e98cfb38861b7a5ce8ebbfc178c522",
+                "url": "https://api.github.com/repos/malzariey/filament-daterangepicker-filter/zipball/6d2b2c427ad7050bd58065d45d977faeca41c692",
+                "reference": "6d2b2c427ad7050bd58065d45d977faeca41c692",
                 "shasum": ""
             },
             "require": {
                 "filament/filament": "^4.0|^5.0",
-                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^11.0|^12.0|^13.0",
+                "illuminate/contracts": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
                 "spatie/laravel-package-tools": "^1.16.4"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0"
             },
             "type": "library",
             "extra": {
@@ -6556,7 +6409,7 @@
             ],
             "support": {
                 "issues": "https://github.com/malzariey/filament-daterangepicker-filter/issues",
-                "source": "https://github.com/malzariey/filament-daterangepicker-filter/tree/4.0.9"
+                "source": "https://github.com/malzariey/filament-daterangepicker-filter/tree/5.0.1"
             },
             "funding": [
                 {
@@ -6564,7 +6417,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-03-22T20:37:45+00:00"
+            "time": "2026-04-02T09:28:37+00:00"
         },
         {
             "name": "mansoor/filament-versionable",
@@ -9740,20 +9593,20 @@
         },
         {
             "name": "ramsey/uuid",
-            "version": "4.9.2",
+            "version": "4.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramsey/uuid.git",
-                "reference": "8429c78ca35a09f27565311b98101e2826affde0"
+                "reference": "1a1f98b037d664d9093a620cfa85305c7e50b244"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramsey/uuid/zipball/8429c78ca35a09f27565311b98101e2826affde0",
-                "reference": "8429c78ca35a09f27565311b98101e2826affde0",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/1a1f98b037d664d9093a620cfa85305c7e50b244",
+                "reference": "1a1f98b037d664d9093a620cfa85305c7e50b244",
                 "shasum": ""
             },
             "require": {
-                "brick/math": "^0.8.16 || ^0.9 || ^0.10 || ^0.11 || ^0.12 || ^0.13 || ^0.14",
+                "brick/math": ">=0.8.16 <=0.17",
                 "php": "^8.0",
                 "ramsey/collection": "^1.2 || ^2.0"
             },
@@ -9786,6 +9639,7 @@
                 "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
                 "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "captainhook": {
@@ -9812,9 +9666,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ramsey/uuid/issues",
-                "source": "https://github.com/ramsey/uuid/tree/4.9.2"
+                "source": "https://github.com/ramsey/uuid/tree/4.x"
             },
-            "time": "2025-12-14T04:43:48+00:00"
+            "time": "2026-04-27T22:11:13+00:00"
         },
         {
             "name": "ryangjchandler/blade-capture-directive",
@@ -15671,16 +15525,16 @@
         },
         {
             "name": "ysfkaya/filament-phone-input",
-            "version": "v4.1.2",
+            "version": "v4.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ysfkaya/filament-phone-input.git",
-                "reference": "b5384d45a8ddf6c2437c22512c6b69d012f12ba0"
+                "reference": "4642a594a3558d29e8bda33038b75a9daaf137e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ysfkaya/filament-phone-input/zipball/b5384d45a8ddf6c2437c22512c6b69d012f12ba0",
-                "reference": "b5384d45a8ddf6c2437c22512c6b69d012f12ba0",
+                "url": "https://api.github.com/repos/ysfkaya/filament-phone-input/zipball/4642a594a3558d29e8bda33038b75a9daaf137e9",
+                "reference": "4642a594a3558d29e8bda33038b75a9daaf137e9",
                 "shasum": ""
             },
             "require": {
@@ -15729,9 +15583,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ysfkaya/filament-phone-input/issues",
-                "source": "https://github.com/ysfkaya/filament-phone-input/tree/v4.1.2"
+                "source": "https://github.com/ysfkaya/filament-phone-input/tree/v4.2.0"
             },
-            "time": "2026-03-10T19:35:04+00:00"
+            "time": "2026-05-19T20:17:19+00:00"
         }
     ],
     "packages-dev": [
@@ -20754,11 +20608,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
-        "a2insights/filament-saas": 20,
-        "andrewdwallo/filament-companies": 20,
-        "jenssegers/agent": 20
+        "a2insights/filament-saas": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

@@ -80,9 +80,9 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasDefaul
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if ($panel->getId() === 'sysadmin') {
-            return $this->hasRole('super_admin');
-        }
+        // if ($panel->getId() === 'sysadmin') {
+        //     return $this->hasRole('super_admin');
+        // }
 
         return true;
     }

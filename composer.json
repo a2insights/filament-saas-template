@@ -6,20 +6,9 @@
         "system"
     ],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/jocelinkisenga/agent"
-        },
-        {
-            "type": "path",
-            "url": "../filament-companies"
-        }
-    ],
     "require": {
         "php": "^8.3",
         "a2insights/filament-saas": "dev-main",
-        "andrewdwallo/filament-companies": "dev-l13-compatibility@dev",
         "barryvdh/laravel-debugbar": "^4.2",
         "inertiajs/inertia-laravel": "^2.0",
         "jenssegers/agent": "3.0.x-dev@dev",
@@ -91,6 +80,6 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
