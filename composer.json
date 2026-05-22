@@ -6,15 +6,19 @@
         "system"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/filament-companies.git"
+        }
+    ],
     "require": {
         "php": "^8.3",
         "a2insights/filament-saas": "dev-main",
+        "andrewdwallo/filament-companies": "dev-l13-compatibility",
         "barryvdh/laravel-debugbar": "^4.2",
-        "inertiajs/inertia-laravel": "^2.0",
-        "jenssegers/agent": "3.0.x-dev@dev",
         "laravel/framework": "^13.8",
         "laravel/tinker": "^3.0",
-        "lorisleiva/laravel-actions": "^2.8",
         "mansoor/filament-versionable": "^5.1",
         "tightenco/ziggy": "^2.3"
     },
