@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "../filament-saas",
-                "reference": "271cc7c3a7e743a7a107a0548046256d59a51abb"
+                "reference": "f0d9b59186a8477e732d8ecc641795a819386481"
             },
             "require": {
                 "amidesfahani/filament-tinyeditor": "^4.0",

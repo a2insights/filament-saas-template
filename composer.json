@@ -14,10 +14,6 @@
         {
             "type": "path",
             "url": "../filament-companies"
-        },
-        {
-            "type": "path",
-            "url": "../filament-saas"
         }
     ],
     "require": {

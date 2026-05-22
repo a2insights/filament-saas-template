@@ -8,11 +8,9 @@ use App\Models\User;
 use App\Policies\CompanyPolicy;
 use App\Policies\ConnectedAccountPolicy;
 use App\Policies\RolePolicy;
-use App\Policies\SchedulePolicy;
 use App\Policies\UserPolicy;
 use App\Policies\WebhookPolicy;
 use BezhanSalleh\PanelSwitch\PanelSwitch;
-use HusamTariq\FilamentDatabaseSchedule\Models\Schedule;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -51,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         // Filament Database Webhook Server
         Gate::policy(FilamentWebhookServer::class, WebhookPolicy::class);
 
-         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+        PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
             $isSuperAdmin = Auth::user()?->hasRole('super_admin');
 
             if ($isSuperAdmin) {

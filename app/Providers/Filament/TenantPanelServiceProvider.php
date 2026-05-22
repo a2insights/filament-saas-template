@@ -80,7 +80,7 @@ class TenantPanelServiceProvider extends PanelProvider
             ->emailVerification()
             ->profile()
             ->tenant(Company::class, 'id')
-            ->tenantProfile(\Wallo\FilamentCompanies\Pages\Company\CompanySettings::class)
+            ->tenantProfile(CompanySettings::class)
             ->tenantRegistration(CreateCompany::class)
             ->tenantMiddleware([
                 TenancyInitialize::class,
