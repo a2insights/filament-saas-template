@@ -6,6 +6,7 @@ use A2Insights\FilamentSaas\User\Settings;
 // TODO:PR for upgrade
 // use Cog\Contracts\Ban\Bannable as BannableContract;
 // use Cog\Laravel\Ban\Traits\Bannable;
+use A2Insights\FilamentSaas\User\UserPreferences;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasDefaultTenant;
@@ -22,9 +23,9 @@ use Illuminate\Support\Facades\Storage;
 use Jeffgreco13\FilamentBreezy\Traits\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use TaylorNetwork\UsernameGenerator\FindSimilarUsernames;
 // TODO: Not update username automatically
 // use TaylorNetwork\UsernameGenerator\GeneratesUsernames;
+use TaylorNetwork\UsernameGenerator\FindSimilarUsernames;
 use Wallo\FilamentCompanies\HasCompanies;
 use Wallo\FilamentCompanies\HasConnectedAccounts;
 use Wallo\FilamentCompanies\HasProfilePhoto;
@@ -48,6 +49,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasDefaul
         'username',
         'avatar_url',
         'password',
+        'settings',
+        'preferences',
     ];
 
     /**
@@ -71,6 +74,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar, HasDefaul
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'settings' => Settings::class,
+            'preferences' => UserPreferences::class,
         ];
     }
 

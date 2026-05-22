@@ -11,6 +11,7 @@ use A2Insights\FilamentSaas\Tenant\TenantPlugin;
 use A2Insights\FilamentSaas\User\Filament\Components\Phone;
 use A2Insights\FilamentSaas\User\Filament\Components\Username;
 use A2Insights\FilamentSaas\User\Filament\UserResource;
+use A2Insights\FilamentSaas\User\Http\Middleware\ApplyUserTheme;
 use A2Insights\FilamentSaas\User\UserPlugin;
 use App\Actions\FilamentCompanies\AddCompanyEmployee;
 use App\Actions\FilamentCompanies\CreateConnectedAccount;
@@ -28,8 +29,11 @@ use App\Actions\FilamentCompanies\UpdateConnectedAccount;
 use App\Actions\FilamentCompanies\UpdateUserPassword;
 use App\Actions\FilamentCompanies\UpdateUserProfileInformation;
 use App\Models\Company;
+use App\Models\Employeeship;
+use App\Models\User;
 use Awcodes\QuickCreate\QuickCreatePlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -37,21 +41,27 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Platform;
+use Filament\Support\Enums\Width;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Marjose123\FilamentWebhookServer\WebhookPlugin;
+use SpyApp\ThemeAberdeen\ThemeAberdeenPlugin;
+use SpyApp\ThemeEdinburgh\ThemeEdinburghPlugin;
+use SpyApp\ThemeInverness\ThemeInvernessPlugin;
 use Wallo\FilamentCompanies\Actions\GenerateRedirectForProvider;
 use Wallo\FilamentCompanies\Enums\Feature;
 use Wallo\FilamentCompanies\Enums\Provider;
 use Wallo\FilamentCompanies\FilamentCompanies;
 use Wallo\FilamentCompanies\Pages\Auth\Login;
+use Wallo\FilamentCompanies\Pages\Auth\Register;
 use Wallo\FilamentCompanies\Pages\Company\CompanySettings;
 use Wallo\FilamentCompanies\Pages\Company\CreateCompany;
 
@@ -60,17 +70,17 @@ class TenantPanelServiceProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('admin')
+            ->id('tenant')
             ->homeUrl('/admin')
             ->path('admin')
             ->default()
             ->login(Login::class)
-            // ->registration($this->getRegistrationPage())
+            ->registration(Register::class)
             ->passwordReset()
             ->emailVerification()
             ->profile()
-            ->tenant(Company::class)
-            ->tenantProfile(CompanySettings::class)
+            ->tenant(Company::class, 'id')
+            ->tenantProfile(\Wallo\FilamentCompanies\Pages\Company\CompanySettings::class)
             ->tenantRegistration(CreateCompany::class)
             ->tenantMiddleware([
                 TenancyInitialize::class,
@@ -81,6 +91,7 @@ class TenantPanelServiceProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->unsavedChangesAlerts()
+            ->maxContentWidth(Width::Full)
             ->viteTheme('resources/css/filament/sysadmin/theme.css')
             ->pages([
                 Dashboard::class,
@@ -88,6 +99,9 @@ class TenantPanelServiceProvider extends PanelProvider
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->plugins([
+                FilamentDeveloperLoginsPlugin::make()
+                    ->enabled(app()->environment('local'))
+                    ->users(fn () => User::all()->pluck('email', 'name')->toArray()),
                 QuickCreatePlugin::make()
                     ->includes([
                         UserResource::class,
@@ -115,7 +129,7 @@ class TenantPanelServiceProvider extends PanelProvider
                         ->disk('avatars')),
                 WebhookPlugin::make(),
                 FilamentCompanies::make()
-                    ->userPanel('company')
+                    ->userPanel('tenant')
                     ->switchCurrentCompany()
                     ->updateProfileInformation()
                     ->updatePasswords()
@@ -129,17 +143,20 @@ class TenantPanelServiceProvider extends PanelProvider
                     ->termsAndPrivacyPolicy()
                     ->notifications()
                     ->modals()
+                    ->useCompanyModel(Company::class)
+                    ->useEmployeeshipModel(Employeeship::class)
+                    ->useUserModel(User::class)
                     ->socialite(
-                        providers: [Provider::Google, Provider::Facebook, Provider::Github],
-                        features: [
-                            Feature::RememberSession,
-                            Feature::ProviderAvatars,
-                            Feature::RememberSession,
-                            Feature::ProviderAvatars,
-                            Feature::GenerateMissingEmails,
-                            Feature::LoginOnRegistration,
-                            Feature::CreateAccountOnFirstLogin,
-                        ],
+                        // providers: [Provider::Google, Provider::Facebook, Provider::Github],
+                        // features: [
+                        //     Feature::RememberSession,
+                        //     Feature::ProviderAvatars,
+                        //     Feature::RememberSession,
+                        //     Feature::ProviderAvatars,
+                        //     Feature::GenerateMissingEmails,
+                        //     Feature::LoginOnRegistration,
+                        //     Feature::CreateAccountOnFirstLogin,
+                        // ],
                     ),
                 UserPlugin::make(),
                 FeaturesPlugin::make(),
@@ -150,13 +167,30 @@ class TenantPanelServiceProvider extends PanelProvider
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
+             /* Future themes can be added here following the same pattern */
+            ->when(
+                fn () => ! app()->runningInConsole() && Auth::user()?->preferences?->app_theme === 'aberdeen',
+                fn (Panel $panel) => $panel->plugin(ThemeAberdeenPlugin::make())
+            )
+            ->when(
+                fn () => ! app()->runningInConsole() && Auth::user()?->preferences?->app_theme === 'inverness',
+                fn (Panel $panel) => $panel->plugin(ThemeInvernessPlugin::make())
+            )
+            ->when(
+                fn () => ! app()->runningInConsole() && Auth::user()?->preferences?->app_theme === 'edinburgh',
+                fn (Panel $panel) => $panel->plugin(ThemeEdinburghPlugin::make())
+            )
+            ->widgets([
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
+                PreventRequestForgery::class,
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
@@ -164,6 +198,7 @@ class TenantPanelServiceProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                ApplyUserTheme::class,
             ])
             ->tenantMiddleware([
             ])

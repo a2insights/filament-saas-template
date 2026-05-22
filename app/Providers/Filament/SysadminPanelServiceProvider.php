@@ -9,9 +9,12 @@ use A2Insights\FilamentSaas\System\SystemPlugin;
 use A2Insights\FilamentSaas\User\Filament\Components\Phone;
 use A2Insights\FilamentSaas\User\Filament\Components\Username;
 use A2Insights\FilamentSaas\User\Filament\UserResource;
+use A2Insights\FilamentSaas\User\Http\Middleware\ApplyUserTheme;
 use A2Insights\FilamentSaas\User\UserPlugin;
+use App\Models\User;
 use Awcodes\QuickCreate\QuickCreatePlugin;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use DutchCodingCompany\FilamentDeveloperLogins\FilamentDeveloperLoginsPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -19,19 +22,23 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Platform;
+use Filament\Support\Enums\Width;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Jeffgreco13\FilamentBreezy\BreezyCore;
 use Kenepa\Banner\BannerPlugin;
 use Marjose123\FilamentWebhookServer\WebhookPlugin;
 use pxlrbt\FilamentEnvironmentIndicator\EnvironmentIndicatorPlugin;
 use pxlrbt\FilamentSpotlight\SpotlightPlugin;
-use SolutionForest\FilamentFirewall\FilamentFirewallPlugin;
+use SpyApp\ThemeAberdeen\ThemeAberdeenPlugin;
+use SpyApp\ThemeEdinburgh\ThemeEdinburghPlugin;
+use SpyApp\ThemeInverness\ThemeInvernessPlugin;
 
 class SysadminPanelServiceProvider extends PanelProvider
 {
@@ -50,6 +57,7 @@ class SysadminPanelServiceProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->unsavedChangesAlerts()
+            ->maxContentWidth(Width::Full)
             ->viteTheme('resources/css/filament/sysadmin/theme.css')
             ->pages([
                 Dashboard::class,
@@ -57,6 +65,9 @@ class SysadminPanelServiceProvider extends PanelProvider
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->plugins([
+                FilamentDeveloperLoginsPlugin::make()
+                    ->enabled(app()->environment('local'))
+                    ->users(fn () => User::all()->pluck('email', 'name')->toArray()),
                 BannerPlugin::make()->persistsBannersInDatabase(),
                 QuickCreatePlugin::make()
                     ->includes([
@@ -84,7 +95,6 @@ class SysadminPanelServiceProvider extends PanelProvider
                         ->directory('avatars')
                         ->disk('avatars')),
                 WebhookPlugin::make(),
-                FilamentFirewallPlugin::make(),
                 EnvironmentIndicatorPlugin::make(),
                 UserPlugin::make(),
                 FeaturesPlugin::make(),
@@ -95,13 +105,26 @@ class SysadminPanelServiceProvider extends PanelProvider
                 // Widgets\AccountWidget::class,
                 // Widgets\FilamentInfoWidget::class,
             ])
+             /* Future themes can be added here following the same pattern */
+            ->when(
+                fn () => ! app()->runningInConsole() && Auth::user()?->preferences?->app_theme === 'aberdeen',
+                fn (Panel $panel) => $panel->plugin(ThemeAberdeenPlugin::make())
+            )
+            ->when(
+                fn () => ! app()->runningInConsole() && Auth::user()?->preferences?->app_theme === 'inverness',
+                fn (Panel $panel) => $panel->plugin(ThemeInvernessPlugin::make())
+            )
+            ->when(
+                fn () => ! app()->runningInConsole() && Auth::user()?->preferences?->app_theme === 'edinburgh',
+                fn (Panel $panel) => $panel->plugin(ThemeEdinburghPlugin::make())
+            )
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
                 AuthenticateSession::class,
                 ShareErrorsFromSession::class,
-                VerifyCsrfToken::class,
+                PreventRequestForgery::class,
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
@@ -109,6 +132,7 @@ class SysadminPanelServiceProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                ApplyUserTheme::class,
             ])
             ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {

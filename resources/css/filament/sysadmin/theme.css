@@ -1,8 +1,22 @@
+@import "tailwindcss";
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
+@source '../../../../vendor/biostate/filament-menu-builder/resources/views/**/*';
+@source '../../../../vendor/wire-elements/**/*.blade.php';
 
+@source '../../../../vendor/biostate/filament-menu-builder/resources/views/**/*';
 @source '../../../../vendor/kenepa/banner/resources/**/*.blade.php';
 @source '../../../../vendor/a2insights/filament-saas/resources/**/*.blade.php';
 @source '../../../../app/Filament/**/*';
-@source '../../../../resources/views/filament/**/*';
+@source '../../../../resources/views/**/*.blade.php';
+@source '../../../../app/Livewire/**/*.php';
 @source '../../../../vendor/andrewdwallo/filament-companies/resources/views';
+@source '../../../../vendor/kenepa/banner/resources/**/*.php';
+@import '../../../../vendor/mansoor/filament-versionable/resources/css/plugin.css';
+@source '../../../../vendor/mansoor/filament-versionable/resources/**/*.blade.php';
+@source '../safelist.css';
+@source '../../../../vendor/caresome/filament-neobrutalism-theme/resources/css/theme.css';
+@source '../../../../vendor/bezhansalleh/filament-panel-switch/resources/views/**/*.blade.php';
 
+@import '../../../../vendor/malzariey/filament-daterangepicker-filter/resources/css/filament-daterangepicker.css';
+@source '../../../../vendor/malzariey/filament-daterangepicker-filter/resources/*/**';
+@source '../../../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';

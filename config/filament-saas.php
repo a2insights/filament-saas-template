@@ -1,13 +1,21 @@
 <?php
 
+use A2Insights\FilamentSaas\User\Filament\UserResource;
+use App\Models\Company;
+use App\Models\User;
+
 return [
     'users' => [
-        'model' => App\Models\User::class,
-        'resource' => A2Insights\FilamentSaas\User\Filament\UserResource::class,
+        'model' => User::class,
+        'resource' => UserResource::class,
         'tenant_scope' => false,
     ],
 
     'companies' => [
-        'model' => App\Models\Company::class,
+        'model' => Company::class,
+    ],
+
+    'robots_allowed_domains' => [
+        'localhost',
     ],
 ];

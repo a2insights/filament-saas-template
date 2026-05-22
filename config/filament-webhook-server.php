@@ -1,5 +1,6 @@
 <?php
 
+use A2Insights\FilamentSaas\Webhook\Filament\Pages\WebhookHistory;
 use Marjose123\FilamentWebhookServer\Pages\Webhooks;
 
 return [
@@ -16,7 +17,7 @@ return [
         'keep_history' => true,
     ],
     'pages' => [
-        \A2Insights\FilamentSaas\Webhook\Filament\Pages\Webhooks::class,
-        \A2Insights\FilamentSaas\Webhook\Filament\Pages\WebhookHistory::class,
+        A2Insights\FilamentSaas\Webhook\Filament\Pages\Webhooks::class,
+        WebhookHistory::class,
     ],
 ];

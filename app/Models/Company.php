@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +16,7 @@ use Wallo\FilamentCompanies\Events\CompanyDeleted;
 use Wallo\FilamentCompanies\Events\CompanyUpdated;
 use Wallo\FilamentCompanies\FilamentCompanies;
 
-class Company extends \Illuminate\Database\Eloquent\Model implements HasAvatar, HasMedia
+class Company extends Model implements HasAvatar, HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;

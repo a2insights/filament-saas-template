@@ -20,6 +20,7 @@ return new class extends SettingsMigration
         $this->migrator->add('settings.terms', true);
 
         $this->migrator->add('settings.sitemap', false);
+        $this->migrator->add('settings.robots', '');
 
         $this->migrator->add('settings.restrict_ips', []);
         $this->migrator->add('settings.restrict_users', []);

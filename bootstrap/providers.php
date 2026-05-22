@@ -1,7 +1,11 @@
 <?php
 
+use App\Providers\AppServiceProvider;
+use App\Providers\Filament\SysadminPanelServiceProvider;
+use App\Providers\Filament\TenantPanelServiceProvider;
+
 return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\Filament\SysadminPanelServiceProvider::class,
-    App\Providers\Filament\TenantPanelServiceProvider::class,
+    AppServiceProvider::class,
+    SysadminPanelServiceProvider::class,
+    TenantPanelServiceProvider::class,
 ];

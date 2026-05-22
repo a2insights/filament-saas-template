@@ -1,5 +1,7 @@
 <?php
 
+use Reliese\Database\Eloquent\Model;
+
 return [
 
     /*
@@ -52,7 +54,7 @@ return [
         |
         */
 
-        'parent' => Reliese\Database\Eloquent\Model::class,
+        'parent' => Model::class,
 
         /*
         |--------------------------------------------------------------------------

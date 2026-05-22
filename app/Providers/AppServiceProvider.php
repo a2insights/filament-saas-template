@@ -7,17 +7,17 @@ use App\Models\ConnectedAccount;
 use App\Models\User;
 use App\Policies\CompanyPolicy;
 use App\Policies\ConnectedAccountPolicy;
-use App\Policies\IpPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\SchedulePolicy;
 use App\Policies\UserPolicy;
 use App\Policies\WebhookPolicy;
+use BezhanSalleh\PanelSwitch\PanelSwitch;
 use HusamTariq\FilamentDatabaseSchedule\Models\Schedule;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Marjose123\FilamentWebhookServer\Models\FilamentWebhookServer;
-use SolutionForest\FilamentFirewall\Models\Ip;
 use Spatie\Permission\Models\Role;
 
 class AppServiceProvider extends ServiceProvider
@@ -48,13 +48,32 @@ class AppServiceProvider extends ServiceProvider
         // Filament Saas
         Gate::policy(User::class, UserPolicy::class);
 
-        // Filament Database Schedule
+        // Filament Database Webhook Server
         Gate::policy(FilamentWebhookServer::class, WebhookPolicy::class);
 
-        // Filament Firewall
-        Gate::policy(Ip::class, IpPolicy::class);
+         PanelSwitch::configureUsing(function (PanelSwitch $panelSwitch) {
+            $isSuperAdmin = Auth::user()?->hasRole('super_admin');
 
-        // Filament Database Schedule
-        Gate::policy(Schedule::class, SchedulePolicy::class);
+            if ($isSuperAdmin) {
+                $panelSwitch->panels([
+                    'sysadmin',
+                    'tenant',
+                ])
+                    // ->visible(fn () => Auth::user()?->hasRole('super_admin'))
+                    ->labels([
+                        'sysadmin' => 'SysAdmin',
+                        'tenant' => 'Tenant',
+                    ])
+                    ->icons([
+                        'sysadmin' => 'heroicon-m-shield-check',
+                        'tenant' => 'heroicon-m-building-office-2',
+                    ])
+                    ->darkIcons([
+                        'sysadmin' => 'heroicon-m-shield-check',
+                        'tenant' => 'heroicon-m-building-office-2',
+                    ])
+                    ->simple();
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use CmsMulti\FilamentClearCache\Http\Livewire\ClearCache;
+
 return [
     // Command to run when clearing the cache
     'default_commands' => [
@@ -11,7 +13,7 @@ return [
     'changes_count' => 'session_key',
 
     // Livewire component for clear cache button in header.
-    'livewireComponentClass' => CmsMulti\FilamentClearCache\Http\Livewire\ClearCache::class,
+    'livewireComponentClass' => ClearCache::class,
 
     // Permissions check
     'permissions' => false,

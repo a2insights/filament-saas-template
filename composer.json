@@ -6,14 +6,31 @@
         "system"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jocelinkisenga/agent"
+        },
+        {
+            "type": "path",
+            "url": "../filament-companies"
+        },
+        {
+            "type": "path",
+            "url": "../filament-saas"
+        }
+    ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "a2insights/filament-saas": "dev-main",
-        "barryvdh/laravel-debugbar": "^3.13",
+        "andrewdwallo/filament-companies": "dev-l13-compatibility@dev",
+        "barryvdh/laravel-debugbar": "^4.2",
         "inertiajs/inertia-laravel": "^2.0",
-        "laravel/framework": "^12.25",
-        "laravel/tinker": "^2.10.1",
+        "jenssegers/agent": "3.0.x-dev@dev",
+        "laravel/framework": "^13.8",
+        "laravel/tinker": "^3.0",
         "lorisleiva/laravel-actions": "^2.8",
+        "mansoor/filament-versionable": "^5.1",
         "tightenco/ziggy": "^2.3"
     },
     "require-dev": {
@@ -22,6 +39,7 @@
         "filament/upgrade": "^4.0",
         "jasonmccreary/laravel-test-assertions": "^2.4",
         "larastan/larastan": "^3.7",
+        "laravel/boost": "^2.2",
         "laravel-lang/lang": "^15.25",
         "laravel-shift/blueprint": "^2.10",
         "laravel/pint": "^1.24",
@@ -30,6 +48,7 @@
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^4.0",
         "pestphp/pest-plugin-laravel": "^4.0",
+        "phpunit/phpunit": "^12.0",
         "spatie/laravel-ignition": "^2.9"
     },
     "autoload": {

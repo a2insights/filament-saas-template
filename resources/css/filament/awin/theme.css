@@ -1,0 +1,4 @@
+@import '../../../../vendor/resma/filament-awin-theme/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';

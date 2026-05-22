@@ -1,5 +1,7 @@
 <?php
 
+use Tests\TestCase;
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -11,8 +13,8 @@
 |
 */
 
-uses(Tests\TestCase::class)->in('Unit');
-uses(Tests\TestCase::class)->in('Feature');
+uses(TestCase::class)->in('Unit');
+uses(TestCase::class)->in('Feature');
 
 /*
 |--------------------------------------------------------------------------
